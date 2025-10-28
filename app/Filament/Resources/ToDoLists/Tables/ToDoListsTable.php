@@ -11,9 +11,11 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use App\Filament\Resources\ToDoLists\ToDoListResource;
 
 class ToDoListsTable
 {
+    // Table configuration methods
     public static function configure(Table $table): Table
     {
         return $table
@@ -62,10 +64,10 @@ class ToDoListsTable
                 SelectFilter::make('status')
                     ->options(ToDoList::getStatuses()),
             ])
-            ->actions([
-                ActionGroup::make([
-                    EditAction::make(),
-                ]),
+           ->actions([
+                    \Filament\Tables\Actions\EditAction::make()
+                    ->url(fn (ToDoList $record): string => route('filament.admin.resources.to-do-lists.edit', $record))
+                    ->icon('heroicon-o-pencil'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
